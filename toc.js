@@ -17,6 +17,20 @@
           element = parent;
         }
       };
+    }).
+    service('headerFinder', function() {
+      return function(element) {
+        if(!element || !element.find) {
+          return;
+        }
+        return element.find('h1');
+      };
+    }).
+    directive('bomfTableOfContents', function(articleFinder) {
+      return {
+        restrict: 'E',
+        compile: function(scope, element, attrs) {
+        }
+      };
     });
 })();
-
