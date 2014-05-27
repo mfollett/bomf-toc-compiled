@@ -26,10 +26,21 @@
         return element.find('h1');
       };
     }).
-    directive('bomfTableOfContents', function(articleFinder) {
+    directive('bomfTableOfContents', function(articleFinder, headerFinder) {
       return {
         restrict: 'E',
-        compile: function(scope, element, attrs) {
+        scope:    false,
+        compile: function(element, attrs) {
+          var list = angular.element('<ol class="toc-table"></ol>');
+          angular.forEach(
+            headerFinder(
+              articleFinder(element)),
+              function(header) {
+                var content = angular.element(header).text();
+                list.append('<li class="toc-entry">'+ content +'</li>');
+              }
+          );
+          element.append(list);
         }
       };
     });
